@@ -14,6 +14,8 @@ const config: webpack.Configuration = {
   devtool: "inline-source-map",
   devServer: {
     watchFiles: ["./src/index.html"],
+    static: "./dist",
+    hot: true,
   },
   output: {
     filename: "main.js",
