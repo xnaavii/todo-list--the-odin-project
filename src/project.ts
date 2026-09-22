@@ -4,21 +4,20 @@ class Project {
   description: string;
   dueDate: string;
   createdAt: string;
+  todos: [];
 
-  constructor({
-    title,
-    description,
-    dueDate,
-  }: {
+  constructor(projectDetails: {
     title: string;
     description: string;
     dueDate: string;
+    todos?: [];
   }) {
     this.id = crypto.randomUUID();
-    this.title = title;
-    this.description = description;
-    this.dueDate = new Date(dueDate).toISOString();
+    this.title = projectDetails.title;
+    this.description = projectDetails.description;
+    this.dueDate = new Date(projectDetails.dueDate).toISOString();
     this.createdAt = new Date(Date.now()).toISOString();
+    this.todos = projectDetails.todos ?? [];
   }
 
   getDetails(this: Project) {
