@@ -29,6 +29,10 @@ class Project {
   addTodo(todoItem: TodoItem) {
     this.#todos.push(todoItem);
   }
+
+  removeTodo(todoItemId: string) {
+    this.#todos = this.#todos.filter((todo) => todo.id !== todoItemId);
+  }
 }
 
 export default Project;
