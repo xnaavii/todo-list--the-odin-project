@@ -8,4 +8,5 @@ const housematesProject = new Project({
   dueDate: "11/20/2026",
 });
 
-console.log(format(housematesProject.getDetails().dueDate, "MM/dd/yyyy"));
+console.log(housematesProject.getTodos());
+console.log(format(housematesProject.dueDate, "MM/dd/yyyy"));
