@@ -1,5 +1,6 @@
-import { type Project } from "./types/index";
+import Project from "./project";
 
+// TODO: Create an option to create a project
 class App {
   #projects: Project[] = [];
 
