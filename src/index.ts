@@ -1,16 +1,29 @@
 import App from "./app";
-import Project from "./project";
-import { format } from "date-fns";
+import { Project } from "./types";
+
+const DEFAULT_PROJECT: Project = {
+  id: crypto.randomUUID(),
+  title: "Housemates App",
+  description: "An app where tenants can share choers etc.",
+  dueDate: "11/20/2026",
+  createdAt: "09/20/2026",
+  todos: [
+    {
+      id: crypto.randomUUID(),
+      title: "Create a wireframe",
+      description:
+        "Create wireframe so that you can better visualize the product",
+      priority: "low",
+      notes: "",
+      checklist: [],
+      isCompleted: false,
+      dueDate: new Date("11/20/2026").toISOString(),
+      createdAt: new Date().toISOString(),
+    },
+  ],
+};
 
 const app = new App();
-console.log(app.getProjects());
+app.addProject(DEFAULT_PROJECT);
 
-// Project details
-const housematesProject = new Project({
-  title: "Housemates App",
-  description: "This housemates project is going to be fire",
-  dueDate: "11/20/2026",
-});
-
-console.log(housematesProject.getTodos());
-console.log(format(housematesProject.dueDate, "MM/dd/yyyy"));
+console.log(app.getProjects()[0]);

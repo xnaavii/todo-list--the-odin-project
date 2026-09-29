@@ -8,8 +8,8 @@ type TodoItem = {
   notes: string;
   checklist: CheckListItem[];
   isCompleted: boolean;
-  dueDate: Date;
-  createdAt: Date;
+  dueDate: string;
+  createdAt: string;
 };
 
 type CheckListItem = {

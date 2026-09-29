@@ -7,6 +7,14 @@ class App {
   getProjects() {
     return this.#projects;
   }
+
+  addProject(projectDetails: {
+    title: string;
+    description: string;
+    dueDate: string;
+  }) {
+    this.#projects.push(new Project(projectDetails));
+  }
 }
 
 export default App;
