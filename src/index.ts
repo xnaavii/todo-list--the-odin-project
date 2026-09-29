@@ -3,14 +3,14 @@ import { ProjectItem } from "./types";
 
 const DEFAULT_PROJECTS: ProjectItem[] = [
   {
-    id: crypto.randomUUID(),
+    id: "project-1",
     title: "Housemates App",
     description: "An app where tenants can share choers etc.",
     dueDate: new Date("11/20/2026").toISOString(),
     createdAt: new Date().toISOString(),
     todos: [
       {
-        id: crypto.randomUUID(),
+        id: "todo-1",
         title: "Create a wireframe",
         description:
           "Create wireframe so that you can better visualize the product",
@@ -26,4 +26,6 @@ const DEFAULT_PROJECTS: ProjectItem[] = [
 ];
 
 const app = new App(DEFAULT_PROJECTS);
+console.log(app.getProjects());
+app.removeProject("project-1");
 console.log(app.getProjects());

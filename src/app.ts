@@ -14,6 +14,10 @@ class App {
   addProject(project: ProjectItem) {
     this.#projects.push(project);
   }
+
+  removeProject(id: string) {
+    this.#projects = this.#projects.filter((project) => project.id !== id);
+  }
 }
 
 export default App;
