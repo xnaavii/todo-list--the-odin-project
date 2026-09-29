@@ -1,7 +1,7 @@
 import App from "./app";
-import { Project } from "./types";
+import { ProjectItem } from "./types";
 
-const DEFAULT_PROJECT: Project = {
+const DEFAULT_PROJECT: ProjectItem = {
   id: crypto.randomUUID(),
   title: "Housemates App",
   description: "An app where tenants can share choers etc.",

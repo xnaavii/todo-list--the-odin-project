@@ -18,13 +18,13 @@ type CheckListItem = {
   isCompleted: boolean;
 };
 
-type Project = {
+type ProjectItem = {
   id: string;
   title: string;
   description: string;
   dueDate: string;
   createdAt: string;
-  todos: TodoItem[];
+  todos?: TodoItem[];
 };
 
-export { type Priority, TodoItem, CheckListItem, Project };
+export { type Priority, TodoItem, CheckListItem, ProjectItem };

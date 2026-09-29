@@ -1,18 +1,14 @@
 import Project from "./project";
+import { type ProjectItem } from "./types";
 
-// TODO: Create an option to create a project
 class App {
-  #projects: Project[] = [];
+  #projects: ProjectItem[] = [];
 
   getProjects() {
     return this.#projects;
   }
 
-  addProject(projectDetails: {
-    title: string;
-    description: string;
-    dueDate: string;
-  }) {
+  addProject(projectDetails: ProjectItem) {
     this.#projects.push(new Project(projectDetails));
   }
 }
