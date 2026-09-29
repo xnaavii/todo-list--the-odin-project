@@ -8,18 +8,18 @@ class Project {
   createdAt: string;
   #todos: TodoItem[];
 
-  constructor(projectDetails: {
+  constructor(project: {
     title: string;
     description: string;
     dueDate: string;
     todos?: TodoItem[];
   }) {
     this.id = crypto.randomUUID();
-    this.title = projectDetails.title;
-    this.description = projectDetails.description;
-    this.dueDate = new Date(projectDetails.dueDate).toISOString();
+    this.title = project.title;
+    this.description = project.description;
+    this.dueDate = new Date(project.dueDate).toISOString();
     this.createdAt = new Date(Date.now()).toISOString();
-    this.#todos = projectDetails.todos ?? [];
+    this.#todos = project.todos ?? [];
   }
 
   getTodos() {
@@ -30,8 +30,8 @@ class Project {
     this.#todos.push(todoItem);
   }
 
-  removeTodo(todoItemId: string) {
-    this.#todos = this.#todos.filter((todo) => todo.id !== todoItemId);
+  removeTodo(id: string) {
+    this.#todos = this.#todos.filter((todo) => todo.id !== id);
   }
 }
 
