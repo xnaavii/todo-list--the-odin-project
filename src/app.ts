@@ -1,15 +1,18 @@
-import Project from "./project";
 import { type ProjectItem } from "./types";
 
 class App {
   #projects: ProjectItem[] = [];
 
+  constructor(projects?: ProjectItem[]) {
+    this.#projects = projects ?? [];
+  }
+
   getProjects() {
     return this.#projects;
   }
 
-  addProject(projectDetails: ProjectItem) {
-    this.#projects.push(new Project(projectDetails));
+  addProject(project: ProjectItem) {
+    this.#projects.push(project);
   }
 }
 
