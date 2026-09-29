@@ -1,5 +1,6 @@
 import App from "./app";
 import { ProjectItem } from "./types";
+import StorageService from "./storage-service";
 
 const DEFAULT_PROJECTS: ProjectItem[] = [
   {
@@ -25,7 +26,15 @@ const DEFAULT_PROJECTS: ProjectItem[] = [
   },
 ];
 
-const app = new App(DEFAULT_PROJECTS);
-console.log(app.getProjects());
-app.removeProject("project-1");
+const storageService = new StorageService();
+
+const savedData = storageService.load("projects");
+const initialProjects = savedData ? JSON.parse(savedData) : DEFAULT_PROJECTS;
+
+if (!savedData) {
+  storageService.save("projects", JSON.stringify(DEFAULT_PROJECTS));
+}
+
+const app = new App(storageService, initialProjects);
+
 console.log(app.getProjects());
