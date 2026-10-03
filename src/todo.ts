@@ -1,4 +1,9 @@
-import { type CheckListItem, type Priority } from "./types/index";
+import {
+  TodoData,
+  TodoItem,
+  type ChecklistItem,
+  type Priority,
+} from "./types/index";
 
 class Todo {
   id: string;
@@ -6,21 +11,13 @@ class Todo {
   description: string;
   priority: Priority;
   notes: string;
-  #checklist: CheckListItem[];
+  #checklist: ChecklistItem[];
   isCompleted: boolean;
   dueDate: string;
   createdAt: string;
 
-  constructor(todo: {
-    title: string;
-    description: string;
-    priority: Priority;
-    notes?: string;
-    checklist?: CheckListItem[];
-    isCompleted?: boolean;
-    dueDate: string;
-  }) {
-    this.id = crypto.randomUUID();
+  constructor(todo: TodoData) {
+    this.id = todo.id ?? crypto.randomUUID();
     this.title = todo.title;
     this.description = todo.description;
     this.priority = todo.priority;
@@ -28,14 +25,28 @@ class Todo {
     this.isCompleted = todo.isCompleted ?? false;
     this.#checklist = todo.checklist ?? [];
     this.dueDate = new Date(todo.dueDate).toISOString();
-    this.createdAt = new Date(Date.now()).toISOString();
+    this.createdAt = todo.createdAt ?? new Date().toISOString();
+  }
+
+  toJSON(): TodoItem {
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      priority: this.priority,
+      notes: this.notes,
+      isCompleted: this.isCompleted,
+      dueDate: this.dueDate,
+      createdAt: this.createdAt,
+      checklist: this.#checklist,
+    };
   }
 
   getCheckList() {
     return this.#checklist;
   }
 
-  addCheckListItem(checkListItem: CheckListItem) {
+  addCheckListItem(checkListItem: ChecklistItem) {
     this.#checklist.push(checkListItem);
   }
 

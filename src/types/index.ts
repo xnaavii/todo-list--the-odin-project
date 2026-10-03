@@ -1,24 +1,24 @@
-type Priority = "high" | "medium" | "low";
+export type Priority = "high" | "medium" | "low";
 
-type TodoItem = {
+export type ChecklistItem = {
+  id: string;
+  title: string;
+  isCompleted: boolean;
+};
+
+export type TodoItem = {
   id: string;
   title: string;
   description: string;
-  priority: Priority;
   notes: string;
-  checklist?: CheckListItem[];
+  priority: Priority;
   isCompleted: boolean;
   dueDate: string;
   createdAt: string;
+  checklist?: ChecklistItem[];
 };
 
-type CheckListItem = {
-  id: string;
-  title: string;
-  isCompleted: boolean;
-};
-
-type ProjectItem = {
+export type ProjectItem = {
   id: string;
   title: string;
   description: string;
@@ -27,4 +27,12 @@ type ProjectItem = {
   todos?: TodoItem[];
 };
 
-export { type Priority, TodoItem, CheckListItem, ProjectItem };
+type Generated = "id" | "createdAt";
+
+export type TodoData = Omit<TodoItem, Generated> &
+  Partial<Pick<TodoItem, Generated>>;
+
+export type ProjectData = Omit<ProjectItem, Generated | "todos"> &
+  Partial<Pick<ProjectItem, Generated>> & {
+    todos?: TodoData[];
+  };

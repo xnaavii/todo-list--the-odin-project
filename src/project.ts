@@ -1,34 +1,40 @@
-import { type TodoItem } from "./types/index";
+import Todo from "./todo";
+import { ProjectData, ProjectItem } from "./types";
 
 class Project {
-  [x: string]: any;
   id: string;
   title: string;
   description: string;
   dueDate: string;
   createdAt: string;
-  #todos: TodoItem[];
+  #todos: Todo[] = [];
 
-  constructor(project: {
-    title: string;
-    description: string;
-    dueDate: string;
-    todos?: TodoItem[];
-  }) {
-    this.id = crypto.randomUUID();
+  constructor(project: ProjectData) {
+    this.id = project.id ?? crypto.randomUUID();
     this.title = project.title;
     this.description = project.description;
     this.dueDate = new Date(project.dueDate).toISOString();
-    this.createdAt = new Date(Date.now()).toISOString();
-    this.#todos = project.todos ?? [];
+    this.createdAt = project.createdAt ?? new Date().toISOString();
+    this.#todos = (project.todos ?? []).map((todo) => new Todo(todo));
+  }
+
+  toJSON(): ProjectItem {
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      dueDate: this.dueDate,
+      createdAt: this.createdAt,
+      todos: this.#todos.map((todo) => todo.toJSON()),
+    };
   }
 
   getTodos() {
     return this.#todos;
   }
 
-  addTodo(todoItem: TodoItem) {
-    this.#todos.push(todoItem);
+  addTodo(todo: Todo) {
+    this.#todos.push(todo);
   }
 
   removeTodo(id: string) {

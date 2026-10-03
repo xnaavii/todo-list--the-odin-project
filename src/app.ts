@@ -1,6 +1,6 @@
 import StorageService from "./storage-service";
 import Project from "./project";
-import Todo from "./todo";
+import { type ProjectData } from "./types";
 
 class App {
   #projects: Project[] = [];
@@ -8,21 +8,21 @@ class App {
 
   constructor(storageController: StorageService, defaultProjects?: Project[]) {
     this.#storage = storageController;
-    const savedProjects = this.#storage.load("projects");
-    if (savedProjects) {
-      const rawProjects = JSON.parse(savedProjects);
-      rawProjects.map((project: Project) => {
-        this.#projects.push(
-          new Project({
-            ...project,
-            todos: project.todos?.map((todo: Todo) => new Todo(todo)),
-          }),
-        );
-      });
-    } else {
+    const loaded = this.loadProjects();
+
+    if (!loaded) {
       this.#projects = defaultProjects ?? [];
       this.saveProjects();
     }
+  }
+
+  loadProjects(): boolean {
+    const saved = this.#storage.load("projects");
+    if (!saved) return false;
+
+    const raw: ProjectData[] = JSON.parse(saved);
+    this.#projects = raw.map((project) => new Project(project));
+    return true;
   }
 
   getProjects(): Project[] {
@@ -41,10 +41,6 @@ class App {
 
   saveProjects() {
     this.#storage.save("projects", JSON.stringify(this.#projects));
-  }
-
-  loadProjects() {
-    this.#projects = JSON.parse(this.#storage.load("projects") ?? "[]");
   }
 }
 
