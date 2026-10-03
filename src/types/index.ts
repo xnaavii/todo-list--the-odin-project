@@ -6,7 +6,7 @@ type TodoItem = {
   description: string;
   priority: Priority;
   notes: string;
-  checklist: CheckListItem[];
+  checklist?: CheckListItem[];
   isCompleted: boolean;
   dueDate: string;
   createdAt: string;

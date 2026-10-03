@@ -1,6 +1,7 @@
 import { type TodoItem } from "./types/index";
 
 class Project {
+  [x: string]: any;
   id: string;
   title: string;
   description: string;

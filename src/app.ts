@@ -1,28 +1,35 @@
-import { type ProjectItem } from "./types";
 import StorageService from "./storage-service";
+import Project from "./project";
+import Todo from "./todo";
 
 class App {
-  #projects: ProjectItem[] = [];
+  #projects: Project[] = [];
   #storage: StorageService;
 
-  constructor(
-    storageController: StorageService,
-    defaultProjects?: ProjectItem[],
-  ) {
+  constructor(storageController: StorageService, defaultProjects?: Project[]) {
     this.#storage = storageController;
-    this.#projects = defaultProjects ?? [];
-  }
-
-  getProjects() {
-    const data = this.#storage.load("projects");
-    if (!data) {
-      this.#storage.save("projects", JSON.stringify(this.#projects));
-      return this.#projects;
+    const savedProjects = this.#storage.load("projects");
+    if (savedProjects) {
+      const rawProjects = JSON.parse(savedProjects);
+      rawProjects.map((project: Project) => {
+        this.#projects.push(
+          new Project({
+            ...project,
+            todos: project.todos?.map((todo: Todo) => new Todo(todo)),
+          }),
+        );
+      });
+    } else {
+      this.#projects = defaultProjects ?? [];
+      this.saveProjects();
     }
-    return JSON.parse(data);
   }
 
-  addProject(project: ProjectItem) {
+  getProjects(): Project[] {
+    return this.#projects;
+  }
+
+  addProject(project: Project) {
     this.#projects.push(project);
     this.saveProjects();
   }
